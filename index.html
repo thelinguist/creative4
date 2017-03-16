@@ -40,6 +40,7 @@ body {
 
 <script>
 /*this script was supposed to create the grid of circles for me, but it doesn't work. It's an angular script*/
+/*
 var app = angular.module("myApp", []); 
 app.controller('TestCtrl', function($scope) {
     $scope.range = function() {
@@ -48,11 +49,33 @@ app.controller('TestCtrl', function($scope) {
 	$scope.working = "hi";
 
 });
+*/
 </script>
 
 <!--This script-section is what talks to the server to 1. tell the server if a user clicked a button, and 2. tell the webpage which pixel-circles have been colored -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
+var selectedColor = "white";
+
+  $(function() {
+	  var socket = io();
+	  
+	  //send the color
+	  $('.circle').click(function() {
+		  var selectedCircle = $(this).attr("id");
+			console.log(selectedCircle.attr("id"));
+		  var jsonColor = {'id': selectedCircle, 'color': selectedColor};
+		  socket.emit('colorMessage', jsonColor);
+	  });
+	  
+	  //get a list of all the colors
+	  socket.on('allColors', function(allColors) {
+		  $.each(allColors, function(i) {
+			  $('#' + allColors[i].id).css("background-color", allColors[i].color);
+		  });
+	  });
+  });
+
 /* currently the rest of this script is just from the chat-app. I'll come in later and fix it */
   $(function() {
   var socket = io();
@@ -69,12 +92,14 @@ app.controller('TestCtrl', function($scope) {
 </head>
 
 <body>
-<h1>The Friends Game</h1>
+<h1>Little Brother's Lite Brite</h1>
 <div class="side">
 </div>
 <div ng-app='app' ng-controller="TestCtrl">
     <div class="gameBoard">
+<!--
     	<div class="circle" ng-repeat="circle in range">{{working}}</div>
+-->
       <div class="circle" id="0"></div>
       <div class="circle" id="1"></div>
       <div class="circle" id="2"></div>
