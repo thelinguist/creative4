@@ -8,18 +8,25 @@ body {
 	background-color:black;
 	color:white;
 }
-.circle {
+h1
+{
+	font-family : Impact, Charcoal, sans-serif;
+	font-size : 30pt;
+	text-align: center;
+}
+.circle
+{
 	border-radius:50%;
-    float:left;
-    position: relative;
-    width: 4vw;
+  float:left;
+  position: relative;
+  width: 4vw;
 	height:4vw;
 	background-color:grey;
-    margin:.25%;
+  margin:.25%;
 	/* if we do images: */
-    background-position:center center;
-    background-repeat:no-repeat;
-    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
 }
 .circle:hover {
 	background-color:blue;
@@ -37,6 +44,31 @@ body {
 #secret {
 	cursor:text;
 }
+.button
+{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+		font-family : "Trebuchet MS", "Helvetica", "sans-serif";
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button2 {background-color: #008CBA;} /* Blue */
+.button3 {background-color: #f44336;} /* Red */
+.button4 {background-color: #262626;} /* Black */
+.button5 {background-color: grey;}
+
+#buttons
+{
+	text-align: center;
+	margin-bottom: 20px;
+}
 </style>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
@@ -44,13 +76,12 @@ body {
 <script>
 /*this script was supposed to create the grid of circles for me, but it doesn't work. It's an angular script*/
 /*
-var app = angular.module("myApp", []); 
+var app = angular.module("myApp", []);
 app.controller('TestCtrl', function($scope) {
     $scope.range = function() {
         return new Array(128);
     };
 	$scope.working = "hi";
-
 });
 */
 </script>
@@ -58,11 +89,37 @@ app.controller('TestCtrl', function($scope) {
 <!--This script-section is what talks to the server to 1. tell the server if a user clicked a button, and 2. tell the webpage which pixel-circles have been colored -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var selectedColor = "white";
 
-      $(function() {
+function changeGreen()
+{
+	var color = green;
+}
+
+function changeBlue()
+{
+	var color = blue;
+}
+
+function changeRed()
+{
+	var color = red;
+}
+
+function changeBlack()
+{
+	var color = black;
+}
+
+function changeGray()
+{
+	var color = gray;
+}
+
+var selectedColor = "white";
+$(function()
+{
 	  var socket = io();
-	  
+
 	  //send the color
 	  $('.circle').click(function() {
 		  var selectedCircle = $(this).attr("id");
@@ -70,25 +127,34 @@ var selectedColor = "white";
 		  			console.log(jsonColor);
 		  socket.emit('colorMessage', jsonColor);
 	  });
-	  
+
 	  //get a list of all the colors
 	  socket.on('allColors', function(allColors) {
 		  $.each(allColors, function(i) {
 			  $('#' + allColors[i].id).css("background-color", allColors[i].color);
 		  });
 	  });
-	  
+
 	  //in case things get crazy
 	  $('#secret').click(function() {
 		  var pass = prompt("nice find, what's the pass to reset?", "putinsux");
 		  socket.emit('reset', pass);
 	  });
-  });
+});
 </script>
 </head>
 
 <body>
 <h1>Little Brother<span id="secret">'</span>s Lite Brite</h1>
+
+<div id = 'buttons'>
+<button class="button" onclick="changeGreen()">Green</button>
+<button class="button button2" onclick="changeBlue()">Blue</button>
+<button class="button button3" onclick="changeRed()">Red</button>
+<button class="button button4" onclick="changeBlack()">Black</button>
+<button class="button button5" onclick="changeGray()">Gray</button>
+</div>
+
 <div class="side">
 </div>
 <!-- angular stuff
@@ -344,5 +410,3 @@ var selectedColor = "white";
 -->
 </body>
 </html>
-
-
