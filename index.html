@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
+<title>Little Brother's Lite Brite Game</title>
 <style>
 .circle {
 	border-radius:50%;
@@ -31,7 +31,7 @@
 	float:right;
 }
 </style>
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
 
 <script>
@@ -43,6 +43,23 @@ app.controller('TestCtrl', function($scope) {
     };
 	$scope.working = "hi";
 
+});
+</script>
+
+<!--This script-section is what talks to the server to 1. tell the server if a user clicked a button, and 2. tell the webpage which pixel-circles have been colored -->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+/* currently the rest of this script is just from the chat-app. I'll come in later and fix it */
+  $(function() {
+  var socket = io();
+  $('form').submit(function() {
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+    });
 });
 </script>
 </head>
@@ -297,4 +314,5 @@ app.controller('TestCtrl', function($scope) {
 </div>
 </body>
 </html>
+
 

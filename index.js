@@ -3,9 +3,14 @@ var http = require('http').Server(app);
 //this is where the events and stuff comes from
 var io = require('socket.io')(http);
 
-
+/* this is the main page we will serve */
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
+});
+
+/*this is for reference. It's a demo of the socketIO stuff */
+app.get('/chat', function(req, res){
+  res.sendFile(__dirname + '/chat.html');
 });
 
 //io.on = when request detected
