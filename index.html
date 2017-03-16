@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<style>
+.circle {
+	border-radius:50%;
+    float:left;
+    position: relative;
+    width: 5vw;
+	height:5vw;
+	background-color:grey;
+    margin:.5%;
+	/* if we do images: */
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+}
+.circle:hover {
+	background-color:blue;
+}
+.side {
+	width:10vw;
+	position:relative;
+	background-color:green;
+}
+.gameBoard {
+	width:90vw;
+	max-width:1100px;
+	position:relative;
+	float:right;
+}
+</style>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+
+<script>
+var app = angular.module("myApp", []); 
+app.controller('TestCtrl', function($scope) {
+    $scope.range = function() {
+        return new Array(128);
+    };
+	$scope.working = "hi";
+
+});
+</script>
+</head>
+
+<body>
+<h1>The Friends Game</h1>
+<div class="side">
+</div>
+<div ng-app='app' ng-controller="TestCtrl">
+    <div class="gameBoard">
+    	<div class="circle" ng-repeat="circle in range">{{working}}</div>
+        <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+                <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+                <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+                <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+                <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+                <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+                <div class="circle" id="1"></div>
+                <div class="circle" id="2"></div>
+        <div class="circle" id="3"></div>
+
+    </div>
+</div>
+</body>
+</html>
+
