@@ -34,6 +34,9 @@ body {
 	position:relative;
 	float:right;
 }
+#secret {
+	cursor:text;
+}
 </style>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
@@ -74,25 +77,18 @@ var selectedColor = "white";
 			  $('#' + allColors[i].id).css("background-color", allColors[i].color);
 		  });
 	  });
+	  
+	  //in case things get crazy
+	  $('#secret').click(function() {
+		  var pass = prompt("nice find, what's the pass to reset?", "putinsux");
+		  socket.emit('reset', pass);
+	  });
   });
-
-/* currently the rest of this script is just from the chat-app. I'll come in later and fix it */
-  $(function() {
-  var socket = io();
-  $('form').submit(function() {
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
-    return false;
-  });
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-});
 </script>
 </head>
 
 <body>
-<h1>Little Brother's Lite Brite</h1>
+<h1>Little Brother<span id="secret">'</span>s Lite Brite</h1>
 <div class="side">
 </div>
 <!-- angular stuff
