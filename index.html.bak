@@ -3,34 +3,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Little Brother's Lite Brite Game</title>
-<!--
-<link rel="stylesheet" type="text/css" href="/litebrite.css"> -->
 <style>
-
 body {
+	background-color:black;
 	color:white;
 }
-h1
-{
-	font-family : Impact, Charcoal, sans-serif;
-	font-size : 30pt;
-	text-align: center;
-}
-.circle
-{
+.circle {
 	border-radius:50%;
-	float:left;
-	position: relative;
-	width: 4vw;
+    float:left;
+    position: relative;
+    width: 4vw;
 	height:4vw;
-	border-style: solid;
-	border-width: 0.5px;
-	border-color: grey;
-	margin:.25%;
+	background-color:grey;
+    margin:.25%;
+	/* if we do images: */
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
 }
 .circle:hover {
-	opacity:0.8;
-	background-color:#0E0203;}
+	background-color:blue;
+}
 .side {
 	width:10vw;
 	position:relative;
@@ -44,61 +37,6 @@ h1
 #secret {
 	cursor:text;
 }
-.button
-{
-    border: none;
-	color:black;
-	font-family : "Trebuchet MS", "Helvetica", "sans-serif";
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 2vw 1vw;
-    cursor: pointer;
-	transition:.4s;
-	width:5vw;
-}
-
-.button:hover {
-	color:white;
-}
-#blue {
-	background-color: #1A63FF;
-}
-#red {
-	background-color: #f44336;
-	}
-#green {
-	background-color: #1dff00;
-}
-#pink {
-	background-color: #ff00f1;
-}
-#yellow {
-	background-color: #c9ff00;
-}
-#orange {
-	background-color: #ff8a00;
-}
-#white {
-	background-color:white;
-}
-#black {
-	background-color:#0E0203;
-
-}
-#erase {
-	color:grey;
-	border-style: solid;
-    border-width: 0.5px;
-	border-color: grey;
-}
-.palette
-{
-	text-align: center;
-	margin-bottom: 20px;
-}
 </style>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
@@ -106,12 +44,13 @@ h1
 <script>
 /*this script was supposed to create the grid of circles for me, but it doesn't work. It's an angular script*/
 /*
-var app = angular.module("myApp", []);
+var app = angular.module("myApp", []); 
 app.controller('TestCtrl', function($scope) {
     $scope.range = function() {
         return new Array(128);
     };
 	$scope.working = "hi";
+
 });
 */
 </script>
@@ -121,14 +60,9 @@ app.controller('TestCtrl', function($scope) {
 <script>
 var selectedColor = "white";
 
-function changeColor(id) {
-	var chosenColor = $(id).css("backgroundColor");
-	selectedColor = chosenColor;
-}
-
-$(function()
-{
+      $(function() {
 	  var socket = io();
+	  
 	  //send the color
 	  $('.circle').click(function() {
 		  var selectedCircle = $(this).attr("id");
@@ -136,42 +70,25 @@ $(function()
 		  			console.log(jsonColor);
 		  socket.emit('colorMessage', jsonColor);
 	  });
+	  
 	  //get a list of all the colors
 	  socket.on('allColors', function(allColors) {
 		  $.each(allColors, function(i) {
-			  /*
-			  if($('#' + allColors[i].id).css("background-color") != "rgb(14, 2, 3)") {
-				  $('#' + allColors[i].id).css("border-color", "rgb(14, 2, 3)");
-			  }
-			  */
 			  $('#' + allColors[i].id).css("background-color", allColors[i].color);
 		  });
 	  });
+	  
 	  //in case things get crazy
 	  $('#secret').click(function() {
 		  var pass = prompt("nice find, what's the pass to reset?", "putinsux");
 		  socket.emit('reset', pass);
 	  });
-});
+  });
 </script>
 </head>
 
-<body id="black">
+<body>
 <h1>Little Brother<span id="secret">'</span>s Lite Brite</h1>
-
-<div class="palette">
-
-    <div class="button" id="pink" onclick="changeColor(pink)">Pink</div>
-    <div class="button" id="red" onclick="changeColor(red)">Red</div>
-    <div class="button" id="yellow" onclick="changeColor(yellow)">Yellow</div>
-    <div class="button" id="orange" onclick="changeColor(orange)">Orange</div>
-    <div class="button" id="green" onclick="changeColor(green)">Green</div>
-    <div class="button" id="blue" onclick="changeColor(blue)">Blue</div>
-    <div class="button" id="white" onclick="changeColor(white)">White</div>
-    <div class="button" id="erase" onclick="changeColor(erase)">Erase</div>
-
-</div>
-
 <div class="side">
 </div>
 <!-- angular stuff
@@ -421,17 +338,11 @@ $(function()
       <div class="circle" id="237"></div>
       <div class="circle" id="238"></div>
       <div class="circle" id="239"></div>
-      
-      <div class="circle" id="240"></div>
-      <div class="circle" id="241"></div>
-      <div class="circle" id="242"></div>
-      <div class="circle" id="243"></div>
-      <div class="circle" id="244"></div>
-      <div class="circle" id="245"></div>
-      <div class="circle" id="246"></div>
   </div>
   <!-- end angular stuff
 </div>
 -->
 </body>
 </html>
+
+
